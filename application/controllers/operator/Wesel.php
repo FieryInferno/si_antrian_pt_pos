@@ -3,20 +3,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Wesel extends MY_Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->model('wesel_model');
-    }
+  public function __construct()
+  {
+    parent::__construct();
+    $this->load->model('wesel_model');
+  }
 
-    public function index($date="")
-    {
-        $date = ($date=="") ? date("Y-m-d") : $date ;
-        $data['date'] = $date;
-        $data['wesel'] = $this->wesel_model->getsemuawesel($date);
-        $data['jumlah_wesel'] = $this->wesel_model->jumlahsemua();
-        $this->load->view('operator/wesel/daftarwesel', $data);
-    }
+  public function index($date = "", $tanggal_akhir = '')
+  {
+    $hari_ini               = date("Y-m-d");
+    $tgl_pertama            = date('Y-m-01', strtotime($hari_ini));
+    $tgl_terakhir           = date('Y-m-t', strtotime($hari_ini));
+    $date                   = ($date=="") ? $tgl_pertama : $date ;
+    $tanggal_akhir          = ($tanggal_akhir=="") ? $tgl_terakhir : $tanggal_akhir ;
+    $data['date']           = $date;
+    $data['tanggal_akhir']  = $tanggal_akhir;
+    $data['wesel']          = $this->wesel_model->getsemuawesel($date, $tanggal_akhir);
+    $data['jumlah_wesel']   = $this->wesel_model->jumlahsemua();
+    $this->load->view('operator/wesel/daftarwesel', $data);
+  }
 
     public function tambah()
     {

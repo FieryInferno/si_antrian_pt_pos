@@ -6,6 +6,9 @@ class Laporan extends MY_Controller
   {
     parent::__construct();
     $this->load->model('gajipensiunan_model');
+    $this->load->model('pengiriman_model');
+    $this->load->model('wesel_model');
+    $this->load->model('pembayaran_model');
   }
 
 	public function pdfgajipensiunan()
@@ -75,12 +78,14 @@ class Laporan extends MY_Controller
 
   public function pdfwesel()
   {
-    $tanggal  = $this->input->post('tanggalwesel');
-    $query    = "SELECT * from wesel WHERE tanggalwesel ='$tanggal' ORDER BY idwesel DESC";
+    $tanggal_awal   =  $this->input->post('tanggal_awal');
+    $tanggal_akhir  =  $this->input->post('tanggal_akhir');
+    // $query    = "SELECT * from wesel WHERE tanggalwesel ='$tanggal' ORDER BY idwesel DESC";
         // echo($query);
         // exit();
     $title  = "PT POS Indonesia";
-    $hasil  = $this->db->query($query);
+    // $hasil  = $this->db->query($query);
+    $hasil  = $this->wesel_model->getsemuawesel($tanggal_awal, $tanggal_akhir);
     $pdf    = new FPDF('l', 'mm', 'Legal');
 
         // membuat halaman baru
@@ -137,12 +142,14 @@ class Laporan extends MY_Controller
 
   public function pdfpembayaran()
   {
-    $tanggal  =  $this->input->post('tanggal');
-    $query    = "SELECT * from Pembayaran WHERE tanggalpembayaran ='$tanggal' ORDER BY idpembayaran DESC";
+    $tanggal_awal   =  $this->input->post('tanggal_awal');
+    $tanggal_akhir  =  $this->input->post('tanggal_akhir');
+    // $query    = "SELECT * from Pembayaran WHERE tanggalpembayaran ='$tanggal' ORDER BY idpembayaran DESC";
         // echo($query);
         // exit();
     $title  = "PT POS Indonesia";
-    $hasil  = $this->db->query($query);
+    // $hasil  = $this->db->query($query);
+    $hasil  = $this->pembayaran_model->getsemuapembayaran($tanggal_awal, $tanggal_akhir);
     $pdf    = new FPDF('l', 'mm', 'Legal');
 
         // membuat halaman baru
@@ -205,7 +212,7 @@ class Laporan extends MY_Controller
         // exit();
     $title  = "PT POS Indonesia";
     // $hasil  = $this->db->query($query);
-    $hasil  = $this->pengiriman_model->getsemuapengiriman($date, $tanggal_akhir);
+    $hasil  = $this->pengiriman_model->getsemuapengiriman($tanggal_awal, $tanggal_akhir);
     $pdf = new FPDF('l', 'mm', 'Legal');
 
         // membuat halaman baru

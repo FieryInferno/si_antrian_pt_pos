@@ -3,16 +3,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pembayaran_model extends CI_Model
 {
-    private $_table = "pembayaran";
+  private $_table = "pembayaran";
 
-    public function getsemuapembayaran($where)
-    {
-        if ($where!="") {
-            $this->db->where('tanggalpembayaran', $where);
-        }
-
-        return $this->db->get($this->_table);
-    }
+  public function getsemuapembayaran($tanggal_awal, $tanggal_akhir)
+  {
+      if ($tanggal_akhir != "" && $tanggal_awal != '') {
+        $this->db->where('tanggalpembayaran >=', $tanggal_awal);
+        $this->db->where('tanggalpembayaran <=', $tanggal_akhir);
+      }
+      return $this->db->get($this->_table);
+  }
+  
     public function save($data)
     {
         $this->db->insert($this->_table, $data);
