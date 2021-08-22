@@ -19,6 +19,7 @@ class Overview extends MY_Controller
     $data['pengiriman']     = $this->pengiriman_model->jumlah();
     $data['wesel']          = $this->wesel_model->jumlah();
     $data['pembayaran']     = $this->pembayaran_model->jumlah();
+    $data['tanggal']        = $this->input->get('tanggal') ? $this->input->get('tanggal') : date('Y-m-d');
     $this->load->view("operator/index",$data);
   }
 

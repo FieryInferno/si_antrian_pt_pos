@@ -62,6 +62,17 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <div class="card-header">
+              <form action="<?= base_url('operator/overview'); ?>" method="get">
+                <div class="row">
+                  <div class="col-12">
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= $tanggal; ?>">
+                  </div>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-danger btn-block float-right">Tampilkan</button>
+              </form>
+            </div>
             <div class="card-body">
               <div class="position-relative mb-4">
                 <canvas id="team-chart" height="400"></canvas>
